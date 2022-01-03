@@ -11,9 +11,10 @@ set buildjimext [list [info nameofexecutable] [file join [file dirname [info nam
 set src [file join [file dirname [info script]] loadtest.c]
 
 set skip [catch {
-	exec {*}$buildjimext $src
+	exec {*}$buildjimext --verbose $src
 } msg opts]
 if {$skip || ![file exists loadtest.so]} {
+	puts [errorInfo $msg $opts(-errorinfo)]
 	skiptest "  (no working build-jim-ext)"
 }
 
